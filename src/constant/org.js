@@ -7,7 +7,6 @@ export const relationShipTypes = {
 };
 
 export const getColorByType = (type) => {
-    console.log(type);
     switch (type) {
       case relationShipTypes.HARD_SKILLS:
         return '#476148';

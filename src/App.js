@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Graph from "./vendor/src";
 import RelationshipFilters from "./components/RelationshipFilters";
 import AddRelation from "./components/AddRelation";
@@ -16,8 +17,8 @@ const App = (props) => {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const generateEdges = () => {
-    return orgs.map((connection) => {
+  const generateEdges = (or) => {
+    return or.map((connection) => {
       return connection.parentPersons.map(parent => {
         return ({ from: connection.id, to: parent.id, color: { color: getColorByType(parent.type) } })
       })
@@ -27,7 +28,6 @@ const App = (props) => {
   const options = {
     layout: {
       hierarchical: true,
-      allowRedraw: true,
     },
     edges: {
       color: "#000000"
@@ -37,23 +37,16 @@ const App = (props) => {
 
 
   useEffect(
-    () => {
-      if (debouncedSearchTerm) {
-        setLoading(true);
-        if (debouncedSearchTerm.length > 3) {
-          const updatedOrgs = org.filter(or => or.hardSkills.includes(debouncedSearchTerm) || or.softSkills.includes(debouncedSearchTerm));
-          console.log(updatedOrgs);
-          setOrgs(updatedOrgs);
-        }
-        setLoading(false);
-      } else {
-        setOrgs(org);
-        setLoading(false);
-      }
+    ()  => {
+      const updatedOrgs = org.filter(or => [...or.hardSkills, ...or.softSkills].some(predicete => predicete.indexOf(searchTerm) >= 0));
+      console.log(updatedOrgs);
+      setOrgs(updatedOrgs);
     },
-    [debouncedSearchTerm] // Only call effect if debounced search term changes
+    [searchTerm] // Only call effect if debounced search term changes
   );
 
+
+  console.log(orgs);
 
   return (
     <div style={{ height: '100%' }}>
@@ -61,17 +54,13 @@ const App = (props) => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <RelationshipFilters onFilterStateChange={(filters) => console.log({ filters })} />
         <AddRelation onAdd={e => console.log(e)} />
-        {isLoading && <div>Loading....</div>}
-        {!isLoading &&
-          <Graph
-            graph={{
-              nodes: orgs,
-              edges: generateEdges(),
-            }}
-            options={options}
-          />
-        }
-
+        <Graph
+          graph={{
+            nodes: orgs,
+            edges: generateEdges(orgs),
+          }}
+          options={options}
+        />
       </div>
     </div>
   );

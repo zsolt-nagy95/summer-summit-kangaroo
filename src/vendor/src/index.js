@@ -46,6 +46,7 @@ class Graph extends Component {
     this.container = React.createRef();
   }
 
+
   componentDidMount() {
     this.edges = new DataSet();
     this.edges.add(this.props.graph.edges);
@@ -55,9 +56,8 @@ class Graph extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log(this.props.graph.nodes, nextProps, nextState)
     let nodesChange = isEqual(this.props.graph.nodes, nextProps.graph.nodes);
-    console.log(nodesChange);
+    console.log(nextProps);
     let edgesChange = isEqual(this.props.graph.edges, nextProps.graph.edges);
     let optionsChange = isEqual(this.props.options, nextProps.options);
     let eventsChange = isEqual(this.props.events, nextProps.events);
@@ -166,6 +166,8 @@ class Graph extends Component {
   }
 
   render() {
+    console.log(this.props);
+
     const { identifier } = this.state;
     const { style } = this.props;
     return React.createElement(
