@@ -28,11 +28,20 @@ const App = (props) => {
   const options = {
     layout: {
       hierarchical: true,
+      clusterThreshold: 500,
     },
     edges: {
       color: "#000000"
     },
-    height: "768px"
+    nodes: {
+      imagePadding: 40,
+      margin: 100,
+    },
+    height: "768px",
+    physics: {
+      enabled: true,
+      stabilization: false
+    }
   };
 
 
