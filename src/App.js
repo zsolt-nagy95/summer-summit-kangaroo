@@ -1,5 +1,6 @@
 import React from "react";
 import Graph from "react-vis-network-graph";
+import AddRelation from "./components/AddRelation";
 
 import { org, relationShipTypes } from "./constant/org";
 import "./index.css";
@@ -56,6 +57,7 @@ const App = (props) => {
         graph={graph}
         options={options}
       />
+      <AddRelation onAdd={e => console.log(e)}/>
     </div>
   );
 };
