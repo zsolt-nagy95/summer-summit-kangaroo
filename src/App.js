@@ -1,31 +1,9 @@
 import React from "react";
 import Graph from "react-vis-network-graph";
-import AddRelation from "./components/AddRelation";
+import RelationshipFilters from "./components/RelationshipFilters";
 
-import { org, relationShipTypes } from "./constant/org";
+import { org, getColorByType } from "./constant/org";
 import "./index.css";
-
-
-
-const getColorByType = (type) => {
-  console.log(type);
-  switch (type) {
-    case relationShipTypes.HARD_SKILLS:
-      return '#476148';
-    case relationShipTypes.MENTORSHIP:
-      return '#BF3088';
-    case relationShipTypes.OPERATIONAL:
-
-      return '#BF3088';
-    case relationShipTypes.PROJECT:
-
-      return '#000000';
-    case relationShipTypes.SOFT_SKILLS:
-      return '#D0B84E';
-    default:
-      return 'black';
-  }
-}
 
 const App = (props) => {
 
@@ -52,12 +30,12 @@ const App = (props) => {
   };
 
   return (
-    <div>
+    <div style={{display: 'flex', flexDirection: 'column'}}>
+      <RelationshipFilters onFilterStateChange={(filters) => console.log({filters})} />
       <Graph
         graph={graph}
         options={options}
       />
-      <AddRelation onAdd={e => console.log(e)}/>
     </div>
   );
 };

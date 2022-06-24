@@ -6,6 +6,26 @@ export const relationShipTypes = {
     MENTORSHIP: "MENTORSHIP"
 };
 
+export const getColorByType = (type) => {
+    console.log(type);
+    switch (type) {
+      case relationShipTypes.HARD_SKILLS:
+        return '#476148';
+      case relationShipTypes.MENTORSHIP:
+        return '#BF3088';
+      case relationShipTypes.OPERATIONAL:
+  
+        return '#BF3088';
+      case relationShipTypes.PROJECT:
+  
+        return '#000000';
+      case relationShipTypes.SOFT_SKILLS:
+        return '#D0B84E';
+      default:
+        return 'black';
+    }
+  }
+
 export const org = [
     {
         "id": 1,
