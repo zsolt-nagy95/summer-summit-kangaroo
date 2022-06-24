@@ -1,6 +1,7 @@
 import React from "react";
 import Graph from "react-vis-network-graph";
 import RelationshipFilters from "./components/RelationshipFilters";
+import AddRelation from "./components/AddRelation";
 
 import { org, getColorByType } from "./constant/org";
 import "./index.css";
@@ -36,6 +37,7 @@ const App = (props) => {
         graph={graph}
         options={options}
       />
+      <AddRelation onAdd={e => console.log(e)}/>
     </div>
   );
 };
