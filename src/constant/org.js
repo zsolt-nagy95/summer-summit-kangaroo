@@ -1,4 +1,4 @@
-const relationShipTypes = {
+export const relationShipTypes = {
     HARD_SKILLS: "HARD_SKILLS",
     SOFT_SKILLS: "SOFT_SKILLS",
     OPERATIONAL: "OPERATIONAL",
@@ -30,7 +30,7 @@ export const org = [
         "label": "Javier",
         "karmaScore": 800,
         "role": "Team Lead",
-        "parentPersons": [{ "id": 2, "type": relationShipTypes.PROJECT }],
+        "parentPersons": [{ "id": 2, "type": relationShipTypes.MENTORSHIP }],
         "softSkills": [],
         "hardSkills": []
     },
