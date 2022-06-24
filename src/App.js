@@ -1,97 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import Graph from "react-vis-network-graph";
+
 import "./index.css";
 
-import { OrgChartComponent } from "./components/OrgChart";
-import * as d3 from "d3";
-
 const App = (props) => {
-  const [data, setData] = useState(null);
-  let addNodeChildFunc = null;
 
-  function addNode() {
-    const node = {
-      nodeId: "testtt",
-      parentNodeId: "O-1",
-      width: 330,
-      height: 147,
-      borderWidth: 1,
-      borderRadius: 5,
-      nodeImage: {
-        url:
-          "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/general.jpg",
-        width: 100,
-        height: 100,
-        centerTopDistance: 0,
-        centerLeftDistance: 0,
-        cornerShape: "ROUNDED",
-        shadow: true,
-        borderWidth: 0
-      },
-      nodeIcon: {
-        icon: "https://to.ly/1yZnX",
-        size: 30
-      },
-      connectorLineColor: {
-        red: 220,
-        green: 189,
-        blue: 207,
-        alpha: 1
-      },
-      connectorLineWidth: 5,
-      dashArray: "",
-      expanded: false,
-      template: `<div>
-                  <div style="margin-left:80px;
-                              margin-top:10px;
-                              font-size:20px;
-                              font-weight:bold;
-                         ">Added Root Child </div>
-                 <div style="margin-left:80px;
-                              margin-top:3px;
-                              font-size:16px;
-                         ">Added position </div>
+  const graph = {
+    nodes: [
+      { id: 1, label: "Node 1", title: "node 1 tootip text" },
+      { id: 2, label: "Node 2", title: "node 2 tootip text" },
+      { id: 3, label: "Node 3", title: "node 3 tootip text" },
+      { id: 4, label: "Node 4", title: "node 4 tootip text" },
+      { id: 5, label: "Node 5", title: "node 5 tootip text" }
+    ],
+    edges: [
+      { from: 1, to: 2 },
+      {from: 1, to: 4},
+      { from: 1, to: 3 },
+      { from: 2, to: 4 },
+      { from: 2, to: 5 }
+    ]
+  };
 
-                 <div style="margin-left:80px;
-                              margin-top:3px;
-                              font-size:14px;
-                         ">Added unit</div>
+  const options = {
+    layout: {
+      hierarchical: true
+    },
+    edges: {
+      color: "#000000"
+    },
+    height: "500px"
+  };
 
-                 <div style="margin-left:200px;
-                             margin-top:15px;
-                             font-size:13px;
-                             position:absolute;
-                             bottom:5px;
-                            ">
-                      <div>Added office</div>
-                      <div style="margin-top:5px">Added area</div>
-                 </div>
-              </div>`
-    };
+  const events = {
+    select: function (event) {
+      var { nodes, edges } = event;
+    }
+  };
 
-    addNodeChildFunc(node);
-  }
-
-  function onNodeClick(nodeId) {
-    console.log("d3", d3.event);
-    alert("clicked " + nodeId);
-  }
-
-  useEffect(() => {
-    d3.json(
-      "https://gist.githubusercontent.com/bumbeishvili/dc0d47bc95ef359fdc75b63cd65edaf2/raw/c33a3a1ef4ba927e3e92b81600c8c6ada345c64b/orgChart.json"
-    ).then((data) => {
-      setData(data);
-    });
-  }, []);
 
   return (
     <div>
-      Click node to trigger action in parent or &nbsp;
-      <button onClick={() => addNode()}>add node as root's child</button>
-      <OrgChartComponent
-        setClick={(click) => (addNodeChildFunc = click)}
-        onNodeClick={onNodeClick}
-        data={data}
+      <Graph
+        graph={graph}
+        options={options}
+        events={events}
+        getNetwork={network => {
+          //  if you want access to vis.js network api you can set the state in a parent component using this property
+        }}
       />
     </div>
   );
