@@ -1,33 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+
+import React, {useEffect, useState} from "react";
 import Graph from "./vendor/src";
+import RelationshipFilters from "./components/RelationshipFilters";
 import AddRelation from "./components/AddRelation";
-
-import { org, relationShipTypes } from "./constant/org";
 import useDebounce from "./hooks/useDebounce";
-import { uniqueId } from "lodash";
 
+import { org, getColorByType } from "./constant/org";
 import "./index.css";
-
-const getColorByType = (type) => {
-  console.log(type);
-  switch (type) {
-    case relationShipTypes.HARD_SKILLS:
-      return '#476148';
-    case relationShipTypes.MENTORSHIP:
-      return '#BF3088';
-    case relationShipTypes.OPERATIONAL:
-
-      return '#BF3088';
-    case relationShipTypes.PROJECT:
-
-      return '#000000';
-    case relationShipTypes.SOFT_SKILLS:
-      return '#D0B84E';
-    default:
-      return 'black';
-  }
-}
 
 const App = (props) => {
   const [orgs, setOrgs] = useState(org);
@@ -65,7 +44,7 @@ const App = (props) => {
           const updatedOrgs = org.filter(or => or.hardSkills.includes(debouncedSearchTerm) || or.softSkills.includes(debouncedSearchTerm));
           console.log(updatedOrgs);
           setOrgs(updatedOrgs);
-                }
+        }
         setLoading(false);
       } else {
         setOrgs(org);
@@ -79,18 +58,21 @@ const App = (props) => {
   return (
     <div style={{ height: '100%' }}>
       <input onChange={(evt) => setSearchTerm(evt.target.value)}></input>
-      <AddRelation onAdd={e => console.log(e)}/>
-      {isLoading && <div>Loading....</div>}
-      {!isLoading &&
-        <Graph
-          graph={{
-            nodes: orgs,
-             edges: generateEdges(),
-          }}
-          options={options}
-        />
-      }
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <RelationshipFilters onFilterStateChange={(filters) => console.log({ filters })} />
+        <AddRelation onAdd={e => console.log(e)} />
+        {isLoading && <div>Loading....</div>}
+        {!isLoading &&
+          <Graph
+            graph={{
+              nodes: orgs,
+              edges: generateEdges(),
+            }}
+            options={options}
+          />
+        }
 
+      </div>
     </div>
   );
 };
