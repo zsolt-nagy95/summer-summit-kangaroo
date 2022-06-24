@@ -1,0 +1,42 @@
+.template .template-root {
+  margin-left:80px;
+  margin-top:10px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.template .template-position {
+  margin-left:80px;
+  margin-top:3px;
+  font-size:16px;
+}
+
+.template .template-unit {
+  margin-left:80px;
+  margin-top:3px;
+  font-size:14px;
+}
+
+.template .template-office {
+  margin-left:200px;
+  margin-top:15px;
+  font-size:13px;
+  position:absolute;
+  bottom:5px;
+}
+
+.template .template-office {
+  margin-left:200px;
+  margin-top:15px;
+  font-size:13px;
+  position:absolute;
+  bottom:5px;
+}
+
+.template .template-area {
+  margin-left:200px;
+  margin-top:15px;
+  font-size:13px;
+  position:absolute;
+  bottom:5px;
+}

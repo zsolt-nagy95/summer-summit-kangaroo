@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./index.css";
+import "./styles/index.css";
+import "./styles/chart.css";
 
 import { OrgChartComponent } from "./components/OrgChart";
 import * as d3 from "d3";
@@ -18,8 +19,8 @@ const App = (props) => {
       borderRadius: 5,
       nodeImage: {
         url:
-          "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/general.jpg",
-        width: 100,
+          "./assets/user_icon.png",
+        width: 500,
         height: 100,
         centerTopDistance: 0,
         centerLeftDistance: 0,
@@ -37,35 +38,20 @@ const App = (props) => {
         blue: 207,
         alpha: 1
       },
-      connectorLineWidth: 5,
+      connectorLineWidth: 100,
       dashArray: "",
       expanded: false,
-      template: `<div>
-                  <div style="margin-left:80px;
-                              margin-top:10px;
-                              font-size:20px;
-                              font-weight:bold;
-                         ">Added Root Child </div>
-                 <div style="margin-left:80px;
-                              margin-top:3px;
-                              font-size:16px;
-                         ">Added position </div>
-
-                 <div style="margin-left:80px;
-                              margin-top:3px;
-                              font-size:14px;
-                         ">Added unit</div>
-
-                 <div style="margin-left:200px;
-                             margin-top:15px;
-                             font-size:13px;
-                             position:absolute;
-                             bottom:5px;
-                            ">
-                      <div>Added office</div>
-                      <div style="margin-top:5px">Added area</div>
-                 </div>
-              </div>`
+      template: `
+        <div class="template">
+          <div class"template-root">Added Root Child </div>
+          <div class"template-position">Added position </div>
+          <div class"template-unit">Added unit</div>
+          <div class"template-office">
+            <div>Added office</div>
+            <div class"template-area">Added area</div>
+          </div>
+        </div>
+      `
     };
 
     addNodeChildFunc(node);
@@ -86,7 +72,6 @@ const App = (props) => {
 
   return (
     <div>
-      Click node to trigger action in parent or &nbsp;
       <button onClick={() => addNode()}>add node as root's child</button>
       <OrgChartComponent
         setClick={(click) => (addNodeChildFunc = click)}
