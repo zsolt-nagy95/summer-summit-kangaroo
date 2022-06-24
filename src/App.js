@@ -1,82 +1,54 @@
-import React, { useState, useEffect } from "react";
-import "./styles/index.css";
-import "./styles/chart.css";
+import React from "react";
+import Graph from "react-vis-network-graph";
 
-import { OrgChartComponent } from "./components/OrgChart";
-import * as d3 from "d3";
+import { org } from "./constant/org";
+import "./index.css";
+
+
+
 
 const App = (props) => {
-  const [data, setData] = useState(null);
-  let addNodeChildFunc = null;
 
-  function addNode() {
-    const node = {
-      nodeId: "testtt",
-      parentNodeId: "O-1",
-      width: 330,
-      height: 147,
-      borderWidth: 1,
-      borderRadius: 5,
-      nodeImage: {
-        url:
-          "./assets/user_icon.png",
-        width: 500,
-        height: 100,
-        centerTopDistance: 0,
-        centerLeftDistance: 0,
-        cornerShape: "ROUNDED",
-        shadow: true,
-        borderWidth: 0
-      },
-      nodeIcon: {
-        icon: "https://to.ly/1yZnX",
-        size: 30
-      },
-      connectorLineColor: {
-        red: 220,
-        green: 189,
-        blue: 207,
-        alpha: 1
-      },
-      connectorLineWidth: 100,
-      dashArray: "",
-      expanded: false,
-      template: `
-        <div class="template">
-          <div class"template-root">Added Root Child </div>
-          <div class"template-position">Added position </div>
-          <div class"template-unit">Added unit</div>
-          <div class"template-office">
-            <div>Added office</div>
-            <div class"template-area">Added area</div>
-          </div>
-        </div>
-      `
-    };
-
-    addNodeChildFunc(node);
+  const generateEdges = () => {
+    return org.map((connection) => {
+      return connection.parentPersons.map(parent => ({from: parent.id, to: connection.id}))
+    }).flat();
   }
 
-  function onNodeClick(nodeId) {
-    console.log("d3", d3.event);
-    alert("clicked " + nodeId);
-  }
 
-  useEffect(() => {
-    d3.json(
-      "https://gist.githubusercontent.com/bumbeishvili/dc0d47bc95ef359fdc75b63cd65edaf2/raw/c33a3a1ef4ba927e3e92b81600c8c6ada345c64b/orgChart.json"
-    ).then((data) => {
-      setData(data);
-    });
-  }, []);
+  const graph = {
+    nodes: org,
+    edges: generateEdges(),
+  };
+
+  const options = {
+    layout: {
+      hierarchical: true
+    },
+    edges: {
+      color: "#000000"
+    },
+    height: "500px"
+  };
+
+  const events = {
+    select: function (event) {
+      var { nodes, edges } = event;
+    }
+  };
+
 
   return (
     <div>
-      <button onClick={() => addNode()}>add node as root's child</button>
-      <OrgChartComponent
-        setClick={(click) => (addNodeChildFunc = click)}
-        onNodeClick={onNodeClick}
-        data={data}
+      <Graph
+        graph={graph}
+        options={options}
+        events={events}
+      
+        getNetwork={network => {
+          console.log(network);
+          //  if you want access to vis.js network api you can set the state in a parent component using this property
+        }}
       />
     </div>
   );
