@@ -51,10 +51,10 @@ const App = (props) => {
 
   function getImageDataURL(id) {
     switch (id) {
-      case 1: 
-      return Nick;
-      case 2: 
-      return Z;
+      case 1:
+        return Nick;
+      case 2:
+        return Z;
       case 3:
         return Javier;
       case 4:
@@ -98,6 +98,8 @@ const App = (props) => {
         borderDashes: false, // only for borders
         borderRadius: 10 // only for box shape
       },
+      width: '100%',
+      height: '100%',
       font: "20px arial black",
       color: {
         background: "white",
@@ -114,8 +116,8 @@ const App = (props) => {
 
 
   useEffect(
-    ()  => {
-      const updatedOrgs = org.filter(or => [...or.hardSkills, ...or.softSkills].some(predicete => predicete.indexOf(searchTerm) >= 0));
+    () => {
+      const updatedOrgs = org.filter(or => [...or.hardSkills, ...or.softSkills].some(predicete => predicete.indexOf(searchTerm) >= 0));
       console.log(updatedOrgs);
       setOrgs(updatedOrgs);
     },
@@ -123,22 +125,82 @@ const App = (props) => {
   );
 
 
+  const elizabethWay = {
+    layout: {
+      hierarchical: {
+        enabled: true,
+        levelSeparation: 300,
+        nodeSpacing: 60,
+        treeSpacing: 100,
+        blockShifting: true,
+        parentCentralization: true,
+        edgeMinimization: false,
+        sortMethod: "hubsize", // hubsize, directed
+        direction: "LR", // UD, DU, LR, RL
+      },
+    },
+    edges: {
+      color: {
+        color: "#000"
+      },
+      smooth: {
+        type: "continuous"
+      },
+      width: 1
+    },
+    nodes: {
+      shape: "box",
+      widthConstraint: 'auto',
+      heightConstraint: 'auto',
+      shapeProperties: {
+        borderDashes: false, // only for borders
+        borderRadius: 10 // only for box shape
+      },
+      font: "20px arial black",
+      color: {
+        background: "white",
+        border: "#E8E8E8"
+      },
+    },
+    physics: { enabled: true },
+    manipulation: {
+      enabled: true,
+      initiallyActive: true,
+    },
+    height: "800px",
+    width: "100%"
+  };
   console.log(orgs);
 
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: '80%' }}>
       <input onChange={(evt) => setSearchTerm(evt.target.value)}></input>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <RelationshipFilters onFilterStateChange={(filters) => console.log({ filters })} />
         <AddRelation onAdd={e => console.log(e)} />
         {nodes && (
-        <Graph
-        graph={{
-          nodes: nodes,
-          edges: generateEdges(org),
-        }}
-        options={options}
-      />
+          <>
+
+
+            <Graph
+
+              graph={{
+                nodes: nodes,
+                edges: generateEdges(nodes),
+              }}
+              options={options}
+            />
+
+
+            <Graph
+              graph={{
+                nodes: orgs,
+                edges: generateEdges(orgs),
+              }}
+              options={elizabethWay}
+            />
+
+          </>
         )}
       </div>
     </div>
