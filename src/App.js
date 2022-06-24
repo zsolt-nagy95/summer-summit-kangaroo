@@ -2,19 +2,16 @@ import React from "react";
 import Graph from "react-vis-network-graph";
 
 import { org } from "./constant/org";
-import "./index.css";
-
-
+import "./styles/index.css";
 
 
 const App = (props) => {
 
-  const generateEdges = () => {
-    return org.map((connection) => {
-      return connection.parentPersons.map(parent => ({from: parent.id, to: connection.id}))
+  const generateEdges = () => {
+    return org.map((connection) => {
+      return connection.parentPersons.map(parent => ({from: parent.id, to: connection.id}))
     }).flat();
   }
-
 
   const graph = {
     nodes: org,
@@ -23,12 +20,53 @@ const App = (props) => {
 
   const options = {
     layout: {
-      hierarchical: true
+      hierarchical: {
+        enabled: true,
+        levelSeparation: 300,
+        nodeSpacing: 60,
+        treeSpacing: 100,
+        blockShifting: true,
+        parentCentralization: true,
+        edgeMinimization: false,
+        sortMethod: "hubsize", // hubsize, directed
+        direction: "LR", // UD, DU, LR, RL
+      },
     },
     edges: {
-      color: "#000000"
+      color: {
+        color: "#000"
+      },
+      smooth: {
+        type: "continuous"
+      },
+      width: 1
     },
-    height: "500px"
+    nodes: {
+      shape: "box",
+      widthConstraint: 'auto',
+      heightConstraint: 'auto',
+      shapeProperties: {
+        borderDashes: false, // only for borders
+        borderRadius: 10 // only for box shape
+      },
+      font: "20px arial black",
+      color: {
+        background: "white",
+        border: "#E8E8E8"
+      },
+    },
+    physics: { enabled: true },
+    manipulation: {
+      enabled: true,
+      initiallyActive: true,
+      addNode: true,
+      addEdge: true,
+      editEdge: true,
+      deleteNode: true,
+      deleteEdge: true
+    },
+    height: "800px",
+    width: "100%"
   };
 
   const events = {
