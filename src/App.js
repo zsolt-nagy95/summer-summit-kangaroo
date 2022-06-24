@@ -9,10 +9,20 @@ import useDebounce from "./hooks/useDebounce";
 import { org, getColorByType } from "./constant/org";
 import "./index.css";
 
+import Javier from "./images/Javier.svg";
+import David from "./images/David.svg";
+import Elizabeth from "./images/Elizabeth.svg";
+import Zsolt from "./images/Zsolt.svg";
+import Natalie from "./images/Natalie.svg";
+import Viktor from "./images/Viktor.svg";
+import Z from "./images/Z.svg";
+import Nick from "./images/Nick.svg";
+
 const App = (props) => {
   const [orgs, setOrgs] = useState(org);
   const [isLoading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [nodes, setNodes] = useState(null);
 
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -24,6 +34,47 @@ const App = (props) => {
       })
     }).flat();
   };
+
+  const generateNodes = () => {
+    const nodes = org.map((org) => {
+      const image = getImageDataURL(org.id);
+      return {
+        ...org,
+        image: image,
+        shape: "image",
+        size: 65,
+        label: "",
+      };
+    });
+    setNodes(nodes);
+  };
+
+  function getImageDataURL(id) {
+    switch (id) {
+      case 1: 
+      return Nick;
+      case 2: 
+      return Z;
+      case 3:
+        return Javier;
+      case 4:
+        return Natalie;
+      case 5:
+        return Zsolt;
+      case 6:
+        return Viktor;
+      case 7:
+        return Elizabeth;
+      case 8:
+        return David;
+      default:
+        return Zsolt;
+    }
+  }
+
+  useEffect(() => {
+    generateNodes();
+  }, []);
 
   const options = {
     layout: {
@@ -80,13 +131,15 @@ const App = (props) => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <RelationshipFilters onFilterStateChange={(filters) => console.log({ filters })} />
         <AddRelation onAdd={e => console.log(e)} />
+        {nodes && (
         <Graph
-          graph={{
-            nodes: orgs,
-            edges: generateEdges(orgs),
-          }}
-          options={options}
-        />
+        graph={{
+          nodes: nodes,
+          edges: generateEdges(org),
+        }}
+        options={options}
+      />
+        )}
       </div>
     </div>
   );
