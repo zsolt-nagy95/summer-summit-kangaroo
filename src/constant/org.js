@@ -28,7 +28,7 @@ export const getColorByType = (type) => {
 export const org = [
     {
         "id": 1,
-        "label": "Nick",
+        "label": "Nick 🇬🇧",
         "role": "CEO",
         "karmaScore": 2022,
         "parentPersons": [],
@@ -37,7 +37,7 @@ export const org = [
     },
     {
         "id": 2,
-        "label": "Z",
+        "label": "Z 🇭🇺",
         "karmaScore": 1400,
         "role": "VP of Engineering",
         "parentPersons": [{ "id": 1, "type": relationShipTypes.OPERATIONAL }],
@@ -46,7 +46,7 @@ export const org = [
     },
     {
         "id": 3,
-        "label": "Javier",
+        "label": "Javier 🇪🇸",
         "karmaScore": 800,
         "role": "Team Lead",
         "parentPersons": [{ "id": 2, "type": relationShipTypes.MENTORSHIP }],
@@ -55,7 +55,7 @@ export const org = [
     },
     {
         "id": 4,
-        "label": "Natalie",
+        "label": "Natalie 🇬🇧",
         "karmaScore": 800,
         "role": "Designer",
         "parentPersons": [{ "id": 3, "type": relationShipTypes.PROJECT }],
@@ -64,7 +64,7 @@ export const org = [
     },
     {
         "id": 5,
-        "label": "Zsolt",
+        "label": "Zsolt 🇭🇺",
         "karmaScore": 0,
         "role": "Backend Lead",
         "parentPersons": [{ "id": 3, "type": relationShipTypes.PROJECT }],
@@ -73,7 +73,7 @@ export const org = [
     },
     {
         "id": 6,
-        "label": "Viktor",
+        "label": "Viktor 🇭🇺",
         "karmaScore": 0,
         "role": "Frontend Engineer",
         "parentPersons": [{ "id": 4, "type": relationShipTypes.PROJECT }, { "id": 3, "type": relationShipTypes.PROJECT }],
@@ -82,7 +82,7 @@ export const org = [
     },
     {
         "id": 7,
-        "label": "Elizabeth",
+        "label": "Elizabeth 🇻🇪",
         "karmaScore": 0,
         "role": "Frontend Engineer",
         "parentPersons": [{ "id": 4, "type": relationShipTypes.PROJECT }, { "id": 3, "type": relationShipTypes.PROJECT }],
@@ -91,7 +91,7 @@ export const org = [
     },
     {
         "id": 8,
-        "label": "Dávid",
+        "label": "Dávid 🇭🇺",
         "karmaScore": 0,
         "role": "Backend Engineer",
         "parentPersons": [{ "id": 5, "type": relationShipTypes.PROJECT }, { "id": 3, "type": relationShipTypes.PROJECT }],

@@ -53,7 +53,8 @@ const App = (props) => {
         border: "#E8E8E8"
       },
     },
-    height: "768px",
+    height: "800px",
+    width: "100%",
     physics: {
       enabled: true,
       stabilization: false
