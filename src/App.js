@@ -31,11 +31,27 @@ const App = (props) => {
       clusterThreshold: 500,
     },
     edges: {
-      color: "#000000"
+      color: {
+        color: "#000"
+      },
+      smooth: {
+        type: "continuous"
+      },
+      width: 1
     },
     nodes: {
-      imagePadding: 40,
-      margin: 100,
+      shape: "box",
+      widthConstraint: 'auto',
+      heightConstraint: 'auto',
+      shapeProperties: {
+        borderDashes: false, // only for borders
+        borderRadius: 10 // only for box shape
+      },
+      font: "20px arial black",
+      color: {
+        background: "white",
+        border: "#E8E8E8"
+      },
     },
     height: "768px",
     physics: {
