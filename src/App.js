@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import Graph from "./vendor/src";
+import AddRelation from "./components/AddRelation";
 
 import { org, relationShipTypes } from "./constant/org";
 import useDebounce from "./hooks/useDebounce";
@@ -78,6 +79,7 @@ const App = (props) => {
   return (
     <div style={{ height: '100%' }}>
       <input onChange={(evt) => setSearchTerm(evt.target.value)}></input>
+      <AddRelation onAdd={e => console.log(e)}/>
       {isLoading && <div>Loading....</div>}
       {!isLoading &&
         <Graph
@@ -88,6 +90,7 @@ const App = (props) => {
           options={options}
         />
       }
+
     </div>
   );
 };
