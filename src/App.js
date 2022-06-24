@@ -1,10 +1,12 @@
-import React from "react";
-import Graph from "react-vis-network-graph";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
+import Graph from "./vendor/src";
 
 import { org, relationShipTypes } from "./constant/org";
+import useDebounce from "./hooks/useDebounce";
+import { uniqueId } from "lodash";
+
 import "./index.css";
-
-
 
 const getColorByType = (type) => {
   console.log(type);
@@ -27,35 +29,65 @@ const getColorByType = (type) => {
 }
 
 const App = (props) => {
+  const [orgs, setOrgs] = useState(org);
+  const [isLoading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const generateEdges = () => {
-    return org.map((connection) => {
-      return connection.parentPersons.map(parent => {        
-        return ({ from: connection.id, to: parent.id, color: { color: getColorByType(parent.type) } })})
+    return orgs.map((connection) => {
+      return connection.parentPersons.map(parent => {
+        return ({ from: connection.id, to: parent.id, color: { color: getColorByType(parent.type) } })
+      })
     }).flat();
-  };
-  
-  const graph = {
-    nodes: org,
-    edges: generateEdges(),
   };
 
   const options = {
     layout: {
-      hierarchical: true
+      hierarchical: true,
+      allowRedraw: true,
     },
     edges: {
       color: "#000000"
     },
-    height: "500px"
+    height: "768px"
   };
 
+
+  useEffect(
+    () => {
+      if (debouncedSearchTerm) {
+        setLoading(true);
+        if (debouncedSearchTerm.length > 3) {
+          const updatedOrgs = org.filter(or => or.hardSkills.includes(debouncedSearchTerm) || or.softSkills.includes(debouncedSearchTerm));
+          console.log(updatedOrgs);
+          setOrgs(updatedOrgs);
+                }
+        setLoading(false);
+      } else {
+        setOrgs(org);
+        setLoading(false);
+      }
+    },
+    [debouncedSearchTerm] // Only call effect if debounced search term changes
+  );
+
+
   return (
-    <div>
-      <Graph
-        graph={graph}
-        options={options}
-      />
+    <div style={{ height: '100%' }}>
+      <input onChange={(evt) => setSearchTerm(evt.target.value)}></input>
+      {isLoading && <div>Loading....</div>}
+      {!isLoading &&
+        <Graph
+          graph={{
+            nodes: orgs,
+             edges: generateEdges(),
+          }}
+          options={options}
+        />
+      }
     </div>
   );
 };
